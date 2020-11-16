@@ -140,30 +140,6 @@ td {
 table {
   width: 100%;
 }
-form label {
-  display: inline-block;
-  width: 150px;
-}
-
-form div {
-  margin-bottom: 10px;
-}
-
-.error {
-  color: red;
-  margin-left: 5px;
-}
-
-label.error {
-  display: inline;
-}
-#first_form {
-  width: 50%;
-  display: inline-block;
-}
-.formDB {
-  text-align: center;
-}
 
 table {
   width: 75%;
