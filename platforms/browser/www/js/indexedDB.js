@@ -1,3 +1,5 @@
+window.onload = function() {
+
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB ||
     window.msIndexedDB;
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction ||
@@ -9,13 +11,13 @@ if (!window.indexedDB) {
         window.alert("Your browser doesn't support a stable version of IndexedDB.");
     }
 
-var restaurantData = [ { id: 0, name: "",picture:"", type: "", date: "",time: "", price: " ",service: "", clean: "", food: "", note: "", reporter:"" }
-];
+var restaurantData ;
 var db;
 var request = window.indexedDB.open('RestaurantDB', 1);
 var tableDB = document.getElementById('tableDB');
 var notificationBtn = document.getElementById('enable');
 var form = document.getElementById('first_form');
+var idAuto = document.getElementById('r-id');
 
 if(Notification.permission === 'denied' || Notification.permission === 'default') {
     notificationBtn.style.display = 'block';
@@ -49,6 +51,8 @@ request.onupgradeneeded = function (event) {
     }
 };
 
+
+
 $(document).ready(function () {
     $('.add-row').click(function () {
         var id = $('#r-id').val();
@@ -63,16 +67,12 @@ $(document).ready(function () {
         var food = $('#food-r').val();
         var note = $('#note').val();
         var reporter = $('#reporter').val();
-        $(".error").remove();
-        if (name.length < 3) {
-            $('#r-name').after('<p class="error">This field is required</p>');
-          }
-       else
-       {
+       
         add(id, name,picture, type,date, time, price, service, clean, food, note, reporter);
-        }
+      
     });
 });
+
 
 function add(idRestaurant, nameRestaurant,pictureRestaurant, typeRestaurant, dateVisit, timeVisit, pricePerOne,
     serviceRating, cleanRating, foodRating, Note, Reporter) {
@@ -93,7 +93,8 @@ function add(idRestaurant, nameRestaurant,pictureRestaurant, typeRestaurant, dat
         );
     };
 }
-form.addEventListener('submit',add,false);
+
+
 function displayData(idRestaurant, nameRestaurant,pictureRestaurant, typeRestaurant,dateVisit, timeVisit,pricePerOne,serviceRating,
     cleanRating,foodRating,Note,Reporter) {
     tableDB.innerHTML = "";
@@ -149,10 +150,75 @@ function displayData(idRestaurant, nameRestaurant,pictureRestaurant, typeRestaur
         }
     }
 }
+$('#updateBtn').click(function () { 
+    var id = $('#r-id').val();
+    var name = $('#r-name').val();
+    var picture = $('#r-picture').val();
+    var type = $('#r-type').val();
+    var date = $('#r-date').val();
+    var time = $('#r-time').val();
+    var price = $('#r-price').val();
+    var service = $('#service-r').val();
+    var clean = $('#clean-r').val();
+    var food = $('#food-r').val();
+    var note = $('#note').val();
+    var reporter = $('#reporter').val();
+    var idEdit = parseInt($('#txtSearch').val());  
+    var transaction = db.transaction(["RestaurantDB"], "readwrite");  
+    var objectStore = transaction.objectStore("RestaurantDB");  
+    var request = objectStore.get(idEdit);  
+  
+    request.onsuccess = function (event) {  
 
+        request.result.idRestaurant = id;  
+        request.result.nameRestaurant = name; 
+        request.result.pictureRestaurant = picture;  
+        request.result.typeRestaurant = type; 
+        request.result.dateVisit = date; 
+        request.result.timeVisit = time; 
+        request.result.pricePerOne = price; 
+        request.result.serviceRating = service; 
+        request.result.cleanRating = clean; 
+        request.result.foodRating = food; 
+        request.result.Note = note; 
+        request.result.Reporter = reporter;  
+        objectStore.put(request.result);  
+        alert('Recored Updated Successfully !!!');  
+    };   
+})
 function editItem(event){
-
+  
 }
+
+// $(document).ready(function () {
+// $('#btnShow').click(function () {  
+//     debugger;  
+//     var idEdit = parseInt($('#txtSearch').val());  
+//     var request = db.transaction(["RestaurantDB"], "readonly").objectStore("RestaurantDB").get(idEdit);  
+//     request.onsuccess = function (event) {  
+//         var r = request.result;  
+//         if (r != null) {  
+//             $('#r-id').val(r.id);  
+//             $('#r-name').val(r.name);  
+//             $('#r-type').val(r.type);
+//             $('#r-picture').val(r.picture);    
+//             $('#food-r').val(r.food);  
+//             $('#service-r').val(r.service);  
+//             $('#clean-r').val(r.clean);  
+//             $('#r-date').val(r.date);  
+//             $('#r-time').val(r.time);  
+//             $('#note').val(r.note);  
+//             $('#reporter').val(r.reporter);  
+//         } else {  
+           
+//             alert('Record Does not exist');  
+//         }  
+
+//     };  
+// });
+    
+
+ 
 function deleteItem(event) {
     // retrieve the name of the task we want to delete
     var dataTask = event.target.getAttribute('data-task');
@@ -167,4 +233,6 @@ function deleteItem(event) {
         event.target.parentNode.parentNode.removeChild(event.target.parentNode);
     };
 };
+};
+
 

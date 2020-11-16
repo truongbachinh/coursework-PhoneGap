@@ -12,7 +12,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Arvo|Bevan' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+    
     <title>Restaurant</title>
 </head>
 
@@ -22,7 +25,7 @@
     <form  id="first_form" method="post" style="width :70%">
         <div>
             <label for="r-id">Restaurant ID:</label>
-            <input type="text" name="restaurantId" id="r-id"  placeholder="Input restaurant id..." required>
+            <input type="text" name="restaurantId" id="r-id"  placeholder="ID">
         </div>
         <div>
             <label for="r-name">Restaurant Name:</label>
@@ -55,6 +58,7 @@
             <label for="r-price">Price per one:</label>
             <input type="text" name="price" id="r-price" value="" placeholder="Input price..." required>
         </div>
+        
         <div>
             <label for="service-r" class="select"> <h2>Service rating</h2></label>
             <select name="service-rating" id="service-r" data-native-menu="false" data-theme="c" required>
@@ -93,14 +97,29 @@
         <div>
             <input type="submit" class="add-row" id="submit" value="Add Restaurant"/>
         </div>
-    </form>
-</div>
-    <hr>
-    <div >
-    
         <button id="enable">
             Restaurant DB
         </button>
+    </form>
+</div>
+
+    <hr>
+    <div >
+    
+        <table>  
+            <tr>  
+                <td colspan="2">For Edit Record</td>  
+            </tr>  
+            <tr>  
+                <td>Enter ID</td>  
+                <td>  
+                    <input type="text" id="txtSearch" />
+                    <input type="button" name="updateBtn" value="Update" id="updateBtn" />   
+                    <input type="button" name="btnShow" value="Show" id="btnShow" />  
+                     
+                </td>  
+            </tr>  
+        </table>  
     
     
         <table >
